@@ -190,7 +190,7 @@ private fun VideoPreview(uri: Uri, onPlayingChanged: (Boolean) -> Unit) {
     }
     AndroidView(factory = { ctx ->
         PlayerView(ctx).apply {
-            this.player = player; useController = true; setUseTextureView(true)
+            this.player = player; useController = true
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }, update = { it.player = player }, modifier = Modifier.fillMaxSize())
