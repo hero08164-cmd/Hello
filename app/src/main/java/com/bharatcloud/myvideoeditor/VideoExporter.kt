@@ -9,7 +9,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.effect.CanvasOverlay
 import androidx.media3.effect.OverlayEffect
-import com.google.common.collect.ImmutableList
+import androidx.media3.effect.TextureOverlay
 import androidx.media3.transformer.EditedMediaItem
 import androidx.media3.transformer.Effects
 import androidx.media3.transformer.ExportException
@@ -29,8 +29,8 @@ internal object VideoExporter {
         if (!folder.exists()) folder.mkdirs()
         val stamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val output = File(folder, "Typography_$stamp.mp4")
-        val overlays = clips.map { TimedTextOverlay(it) }
-        val effects = Effects(emptyList(), listOf(OverlayEffect(ImmutableList.copyOf(overlays))))
+        val overlays: MutableList<TextureOverlay> = clips.map { TimedTextOverlay(it) }.toMutableList()
+        val effects = Effects(mutableListOf(), mutableListOf(OverlayEffect(overlays))
         val edited = EditedMediaItem.Builder(MediaItem.fromUri(input)).setEffects(effects).build()
         val transformer = Transformer.Builder(context).addListener(object : Transformer.Listener {
             override fun onCompleted(composition: androidx.media3.transformer.Composition, exportResult: ExportResult) {
@@ -47,7 +47,7 @@ internal object VideoExporter {
 }
 
 @UnstableApi
-private class TimedTextOverlay(private val clip: TextClip) : CanvasOverlay() {
+private class TimedTextOverlay(private val clip: TextClip) : CanvasOverlay(true) {
     private var width = 1080
     private var height = 1920
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
