@@ -30,7 +30,7 @@ internal object VideoExporter {
         val stamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val output = File(folder, "Typography_$stamp.mp4")
         val overlays: MutableList<TextureOverlay> = clips.map { TimedTextOverlay(it) }.toMutableList()
-        val effects = Effects(mutableListOf(), mutableListOf(OverlayEffect(overlays))
+        val effects = Effects(mutableListOf(), mutableListOf(OverlayEffect(overlays)))
         val edited = EditedMediaItem.Builder(MediaItem.fromUri(input)).setEffects(effects).build()
         val transformer = Transformer.Builder(context).addListener(object : Transformer.Listener {
             override fun onCompleted(composition: androidx.media3.transformer.Composition, exportResult: ExportResult) {
