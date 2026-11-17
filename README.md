@@ -8,3 +8,5 @@ Build: open GitHub Actions and run **Build Typography Video Maker APK**. Downloa
 
 
 Build workflow refreshed for Android SDK setup.
+
+Build retry after SDK manager configuration.
